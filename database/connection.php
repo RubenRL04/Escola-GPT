@@ -25,3 +25,21 @@ function connectMySQL(string $dsn, string $userdb, string $passdb) {
     }
 }
 
+/**
+ * Database connection in SQLite using PDO
+ * 
+ * @param string $dbname Name of the database
+ * 
+ * @return PDO|null $db Database connection
+ */
+function connectSqlite(string $dbname) {
+    try {
+        $db = new PDO('sqlite:'.__DIR__.'/database/'.$dbname.'.sqlite');
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
+    } catch (PDOException $e) {
+        die($e->getMessage());
+    }
+    return $db;
+}
+
